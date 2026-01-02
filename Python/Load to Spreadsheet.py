@@ -1,9 +1,11 @@
 import json
 import xlsxwriter
 
+##CHANGE FILEPATH
+cards_filepath = 'all-cards.json'
+
 workbook = xlsxwriter.Workbook("Cards.xlsx")
 worksheet = workbook.add_worksheet()
-
 all_card_options = ["id"]
 debug = False
 sample = False
@@ -391,15 +393,15 @@ def tryWrite(col,val):
 
 def saveCardAttempt(processed_card):
     try:
-        keys = card.keys()        
+        keys = processed_card.keys()        
         for i in keys:
             try:            
                 keyCol = getKeyCol(i)
-                tryWrite(keyCol,card[i])    
+                tryWrite(keyCol,processed_card[i])    
             except:
                 tryWrite(0,"")
-    except:
-        print("Could not parse card data")
+    except Exception as e:
+        print(f"Could not parse card data: {e}")
 
 def getKeyCol(keyId):
     flexCol = all_card_options.index(keyId)
@@ -557,81 +559,85 @@ def getKeyCol(keyId):
         return 74
 
 def initializeSheet():
-    worksheet.write(0,1,"object")
-    worksheet.write(0,0,"id")
-    worksheet.write(0,2,"oracle_id")
-    worksheet.write(0,3,"multiverse_ids")
-    worksheet.write(0,4,"mtgo_id")
-    worksheet.write(0,5,"mtgo_foil_id")
-    worksheet.write(0,6,"tcgplayer_id")
-    worksheet.write(0,7,"cardmarket_id")
-    worksheet.write(0,8,"name")
-    worksheet.write(0,9,"lang")
-    worksheet.write(0,10,"released_at")
-    worksheet.write(0,11,"uri")
-    worksheet.write(0,12,"scryfall_uri")
-    worksheet.write(0,13,"layout")
-    worksheet.write(0,14,"highres_image")
-    worksheet.write(0,15,"image_status")
-    worksheet.write(0,16,"image_uris")
-    worksheet.write(0,17,"mana_cost")
-    worksheet.write(0,18,"cmc")
-    worksheet.write(0,19,"type_line")
-    worksheet.write(0,20,"oracle_text")
-    worksheet.write(0,21,"power")
-    worksheet.write(0,22,"toughness")
-    worksheet.write(0,23,"colors")
-    worksheet.write(0,24,"color_identity")
-    worksheet.write(0,25,"keywords")
-    worksheet.write(0,26,"legalities")
-    worksheet.write(0,27,"games")
-    worksheet.write(0,28,"reserved")
-    worksheet.write(0,29,"foil")
-    worksheet.write(0,30,"nonfoil")
-    worksheet.write(0,31,"finishes")
-    worksheet.write(0,32,"oversized")
-    worksheet.write(0,33,"promo")
-    worksheet.write(0,34,"reprint")
-    worksheet.write(0,35,"variation")
-    worksheet.write(0,36,"set_id")
-    worksheet.write(0,37,"set")
-    worksheet.write(0,38,"set_name")
-    worksheet.write(0,39,"set_type")
-    worksheet.write(0,40,"set_uri")
-    worksheet.write(0,41,"set_search_uri")
-    worksheet.write(0,42,"scryfall_set_uri")
-    worksheet.write(0,43,"rulings_uri")
-    worksheet.write(0,44,"prints_search_uri")
-    worksheet.write(0,45,"collector_number")
-    worksheet.write(0,46,"digital")
-    worksheet.write(0,47,"rarity")
-    worksheet.write(0,48,"flavor_text")
-    worksheet.write(0,49,"card_back_id")
-    worksheet.write(0,50,"artist")
-    worksheet.write(0,51,"artist_ids")
-    worksheet.write(0,52,"illustration_id")
-    worksheet.write(0,53,"border_color")
-    worksheet.write(0,54,"frame")
-    worksheet.write(0,55,"full_art")
-    worksheet.write(0,56,"textless")
-    worksheet.write(0,57,"booster")
-    worksheet.write(0,58,"story_spotlight")
-    worksheet.write(0,59,"edhrec_rank")
-    worksheet.write(0,60,"penny_rank")
-    worksheet.write(0,61,"prices")
-    worksheet.write(0,62,"related_uris")
-    worksheet.write(0,63,"purchase_uris")
-    worksheet.write(0,64,"all_parts")
-    worksheet.write(0,65,"promo_types")
-    worksheet.write(0,66,"arena_id")
-    worksheet.write(0,67,"security_stamp")
-    worksheet.write(0,68,"card_faces")
-    worksheet.write(0,69,"preview")
-    worksheet.write(0,70,"produced_mana")
-    worksheet.write(0,71,"watermark")
-    worksheet.write(0,72,"frame_effects")
-    worksheet.write(0,73,"loyalty")
-    worksheet.write(0,74,"printed_name")
+    for keyid in all_card_options:
+        flexCol = all_card_options.index(keyid)
+        worksheet.write(0,flexCol,keyid)  
+
+    # worksheet.write(0,1,"object")
+    # worksheet.write(0,0,"id")
+    # worksheet.write(0,2,"oracle_id")
+    # worksheet.write(0,3,"multiverse_ids")
+    # worksheet.write(0,4,"mtgo_id")
+    # worksheet.write(0,5,"mtgo_foil_id")
+    # worksheet.write(0,6,"tcgplayer_id")
+    # worksheet.write(0,7,"cardmarket_id")
+    # worksheet.write(0,8,"name")
+    # worksheet.write(0,9,"lang")
+    # worksheet.write(0,10,"released_at")
+    # worksheet.write(0,11,"uri")
+    # worksheet.write(0,12,"scryfall_uri")
+    # worksheet.write(0,13,"layout")
+    # worksheet.write(0,14,"highres_image")
+    # worksheet.write(0,15,"image_status")
+    # worksheet.write(0,16,"image_uris")
+    # worksheet.write(0,17,"mana_cost")
+    # worksheet.write(0,18,"cmc")
+    # worksheet.write(0,19,"type_line")
+    # worksheet.write(0,20,"oracle_text")
+    # worksheet.write(0,21,"power")
+    # worksheet.write(0,22,"toughness")
+    # worksheet.write(0,23,"colors")
+    # worksheet.write(0,24,"color_identity")
+    # worksheet.write(0,25,"keywords")
+    # worksheet.write(0,26,"legalities")
+    # worksheet.write(0,27,"games")
+    # worksheet.write(0,28,"reserved")
+    # worksheet.write(0,29,"foil")
+    # worksheet.write(0,30,"nonfoil")
+    # worksheet.write(0,31,"finishes")
+    # worksheet.write(0,32,"oversized")
+    # worksheet.write(0,33,"promo")
+    # worksheet.write(0,34,"reprint")
+    # worksheet.write(0,35,"variation")
+    # worksheet.write(0,36,"set_id")
+    # worksheet.write(0,37,"set")
+    # worksheet.write(0,38,"set_name")
+    # worksheet.write(0,39,"set_type")
+    # worksheet.write(0,40,"set_uri")
+    # worksheet.write(0,41,"set_search_uri")
+    # worksheet.write(0,42,"scryfall_set_uri")
+    # worksheet.write(0,43,"rulings_uri")
+    # worksheet.write(0,44,"prints_search_uri")
+    # worksheet.write(0,45,"collector_number")
+    # worksheet.write(0,46,"digital")
+    # worksheet.write(0,47,"rarity")
+    # worksheet.write(0,48,"flavor_text")
+    # worksheet.write(0,49,"card_back_id")
+    # worksheet.write(0,50,"artist")
+    # worksheet.write(0,51,"artist_ids")
+    # worksheet.write(0,52,"illustration_id")
+    # worksheet.write(0,53,"border_color")
+    # worksheet.write(0,54,"frame")
+    # worksheet.write(0,55,"full_art")
+    # worksheet.write(0,56,"textless")
+    # worksheet.write(0,57,"booster")
+    # worksheet.write(0,58,"story_spotlight")
+    # worksheet.write(0,59,"edhrec_rank")
+    # worksheet.write(0,60,"penny_rank")
+    # worksheet.write(0,61,"prices")
+    # worksheet.write(0,62,"related_uris")
+    # worksheet.write(0,63,"purchase_uris")
+    # worksheet.write(0,64,"all_parts")
+    # worksheet.write(0,65,"promo_types")
+    # worksheet.write(0,66,"arena_id")
+    # worksheet.write(0,67,"security_stamp")
+    # worksheet.write(0,68,"card_faces")
+    # worksheet.write(0,69,"preview")
+    # worksheet.write(0,70,"produced_mana")
+    # worksheet.write(0,71,"watermark")
+    # worksheet.write(0,72,"frame_effects")
+    # worksheet.write(0,73,"loyalty")
+    # worksheet.write(0,74,"printed_name")
 
 def processCard(card):    
     try:        
@@ -644,17 +650,17 @@ def processCard(card):
                 pass
             else:
                 all_card_options.append(i)
+        return processed_card
     except Exception as e:
         print(f"Error: {e}")
 
 # with open('all-cards.json','r') as file:
 #     data = json.load(file)
 
-initializeSheet()
-with open('all-cards.json','r',encoding="utf8") as file:    
+with open(cards_filepath,'r',encoding="utf8") as file:    
     line_count = sum(1 for line in file)
 
-with open('all-cards.json','r',encoding="utf8") as file2:        
+with open(cards_filepath,'r',encoding="utf8") as file2:        
     for line in file2:        
         if(count%1000 == 0):            
             pct_num = int((count/line_count)*10000)/100
@@ -666,7 +672,7 @@ with open('all-cards.json','r',encoding="utf8") as file2:
                 all_but_one = str(line[:-2])
                 card = json.loads(all_but_one)
                 processed_card = processCard(card)                
-                saveCardAttempt(processed_card)
+                saveCardAttempt(card)
         except Exception as e:            
             print(f"An error ({e}) occured parsing line {str(count)}")            
         count = count + 1
@@ -674,6 +680,7 @@ with open('all-cards.json','r',encoding="utf8") as file2:
         if(sample and count>=sample_size):                        
             workbook.close()
             quit()
+    initializeSheet()
     workbook.close()  
     print("100.00%")      
     quit()
